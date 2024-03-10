@@ -1,4 +1,16 @@
 import cv2
+import argparse
+
+def parse_arguments() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="YOLOv8 live")
+    parser.add_argument(
+        "--resolution", 
+        default=[1920, 1080], 
+        nargs=2, 
+        type=int
+    )
+    args = parser.parse_args()
+    return args
 
 def main():
     cap = cv2.VideoCapture(0)

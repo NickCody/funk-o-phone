@@ -1,0 +1,36 @@
+{
+    "terminal.integrated.defaultProfile.osx": "bash with script",
+    "terminal.integrated.defaultProfile.windows": "CMD with script",
+    "terminal.integrated.defaultProfile.linux": "bash with script",
+
+    "terminal.integrated.profiles.osx": {
+        "bash with script": {
+            "path": "bash",
+            "args": [
+                "-c",
+                "source ${workspaceFolder}/.venv/bin/activate; exec $SHELL -l "
+            ]
+        }
+    },
+
+    "terminal.integrated.profiles.windows": {
+        "CMD with script": {
+            "path": "cmd.exe",
+            "args": [
+                "/k",
+                "${workspaceFolder}\\.venv\\Scripts\\activate.bat"
+            ]
+        }
+    },
+
+    "terminal.integrated.profiles.linux": {
+        "bash with script": {
+            "path": "bash",
+            "args": [
+                "-c",
+                "source ${workspaceFolder}/.venv/bin/activate; exec $SHELL"
+            ]
+        }
+    }
+
+}
