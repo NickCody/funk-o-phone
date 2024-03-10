@@ -127,11 +127,15 @@ chunks.append(chord(21, scale) + pluck2(scale.get(28)))
 
 chunk = numpy.concatenate(chunks) * 0.25
 
-# p = pyaudio.PyAudio()
-# stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=1)
-# stream.write(chunk.astype(numpy.float32).tostring())
-# stream.close()
-# p.terminate()
-
+# Write to output.wav
+#
 chunk_16 = numpy.int16(chunk * 32767)
 wavfile.write('output.wav', 44100, chunk_16)
+
+# Play
+#
+p = pyaudio.PyAudio()
+stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=1)
+stream.write(chunk.astype(numpy.float32).tostring())
+stream.close()
+p.terminate()
