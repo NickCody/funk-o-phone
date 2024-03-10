@@ -1,3 +1,4 @@
+opencv-python==4.9.0.80
 ultralytics==8.0.32
 supervision==0.2.1
 opencv-python==4.9.0.80
