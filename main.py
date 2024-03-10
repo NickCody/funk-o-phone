@@ -5,7 +5,7 @@ def main():
 
     while True:
         ret, frame = cap.read()
-        cv2.imgshow("grove", frame)
+        cv2.imshow("grove", frame)
 
         if (cv2.waitKey(30) == 27):
             break
