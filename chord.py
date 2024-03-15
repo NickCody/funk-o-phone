@@ -5,6 +5,9 @@ import itertools
 from scipy import interpolate
 from operator import itemgetter
 from scipy.io import wavfile
+import threading
+import msvcrt
+import time
 
 # https://davywybiral.blogspot.com/2010/09/procedural-music-with-pyaudio-and-numpy.html
 
@@ -125,17 +128,27 @@ chunks.append(chord(22, scale) + pluck2(scale.get(32)))
 chunks.append(chord(20, scale) + pluck2(scale.get(29)))
 chunks.append(chord(21, scale) + pluck2(scale.get(28)))
 
-chunk = numpy.concatenate(chunks) * 0.25
+chunk = numpy.concatenate(chunks) * 0.75
 
 # Write to output.wav
 #
 chunk_16 = numpy.int16(chunk * 32767)
 wavfile.write('output.wav', 44100, chunk_16)
 
-# Play
-#
-p = pyaudio.PyAudio()
-stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=1)
-stream.write(chunk.astype(numpy.float32).tostring())
-stream.close()
-p.terminate()
+def play():
+  # Play
+  #
+  p = pyaudio.PyAudio()
+  stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=1)
+  stream.write(chunk.astype(numpy.float32).tobytes())
+  stream.close()
+  p.terminate()
+
+if __name__ == "__main__":
+  threading.Thread(target=play, args=(), daemon=True).start()
+  time.sleep(1.5)
+  threading.Thread(target=play, args=(), daemon=True).start()
+
+  print("Press any key to exit...")
+  msvcrt.getch()
+

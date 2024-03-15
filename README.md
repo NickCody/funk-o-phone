@@ -15,6 +15,15 @@ NOTE: Every terminal you open needs to have the virtual environment activated.
       You can do this by running `source .venv/bin/activate` in the terminal.
       The other steps (creating the virtual environment and installing the requirements) only need to be done once.
 
+### Windows
+
+Additionally, on Windows, you'll want o run this to install pyaudio:
+
+```bash  
+    pip install pipwin
+    pipwin install pyaudio
+```
+
 ## Try some sample programs
 
 ```bash

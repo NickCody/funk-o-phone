@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import pyaudio
 import struct
 import math
@@ -66,4 +65,4 @@ def play(frequency: float, time: float):
 
 
 if __name__ == "__main__":
-    play(400, 1)
+    play(400, 5)
