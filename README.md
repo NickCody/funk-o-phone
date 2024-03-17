@@ -28,7 +28,8 @@ Additionally, on Windows, you'll want o run this to install pyaudio:
 
 ```bash
 
-python3 -m main
+cd demos
+python3 -m basic-capture
 python3 -m chord
 python3 -m play
 python3 -m roboflow
