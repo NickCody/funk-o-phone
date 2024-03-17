@@ -128,15 +128,6 @@ class Play:
         self.stream.close()
         self.p.terminate()
 
-# def play():
-#  # Play
-#  #
-#  p = pyaudio.PyAudio()
-#  stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=1)
-#  stream.write(chunk.astype(numpy.float32).tobytes())
-#  stream.close()
-#  p.terminate()
-
 
 def waitKey():
     with keyboard.Events() as events:
