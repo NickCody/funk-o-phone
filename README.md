@@ -30,6 +30,7 @@ Additionally, on Windows, you'll want o run this to install pyaudio:
 
 cd demos
 python3 -m basic-capture
+python3 -m utensils
 python3 -m chord
 python3 -m play
 python3 -m roboflow
