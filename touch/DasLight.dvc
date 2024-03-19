@@ -1,0 +1,73 @@
+
+<DLMFILE TYPE="Daslight" VERSION="5" DASBUILD="23.1213.0.50" VERSIONFILE="2">
+    <CONFIGURATION VIEWZOOM="1" VIEWPOSX="-12" VIEWPOSY="1" TOUCH_DOCK_MANAGER="0000013278da758f4b0fc2201084effe8a0d776dbd79408ca9e9d1477c9db16c1a620b0656a3fe7a976ab879627686fd06e4e2d977f0c010ad7773319d9402d035de58d7cec5f1508f6762a1e48e96e6a15d8366e59b2b67fb5724ece19417051c23863c33a6f28eb475eca458c93c43dd794d4341c9fefed65922b637c1225fa101304e80bba3efee32a08683be0c28a8ee21608ab6ba4548f9d99a1609d6bac7ec42d5f9882695144a1609c165f68d5195208bafe2f357cf32bf90f59f1fabd10789cc650b"/>
+    <PATCHS DATA="AAALBHic1VbbbptAEP0VtO+EO5jKjrTAYm/FTbDEdlSpMhhXVi1bshM1/fvusgv4kqTKS5X6hZkzl52dM5gZZ5D4MynxQrwgZY4mQAf3Y6EU9+OiiCLs5TBfSlSkeImDCRitXHdk2bVcbdxaNl3bkitNreTKWjuW7Zia6+qABSQwpim/T5t9c9zWSj717k6nHTuCGrM8zVBOMCpEbhLCGEfLCdBAh5BlRhPYrU79Seqn0QSorV7gR7SgBVu9tmTld8pjb5ojPJ2RLsxDMKYHJziZdiedQTo9jfvBOItwBpMurtUJjvpEBMfozM7UczM1+SghKKen6I5wicg1xvJm6ZxBag9E5eJCxSHtgqz1AEFxNgGOqg4+vFMRCnokR+EE9Pfjdu6P/ZSWXdSrfbStjqvjb2VbH/ZKuH15ej42J6UnLFvtm90dNbZhRpB6X5FPQhzRVK3t9I27vGg3HrSTX5RukhTaDRSJR+tKiUxzRhHnKA/iGCZlCH3mn/PBec3C5k/tDCI996bTdYUPvuz2QQ7nHeM4eTijjmrnzPk5goQVV+5/7g+/gNKOa5wGfFITj4ksU49L4omTAPXMJZ4/gwm97wQY3FXo0iByVsScCkzcplmDK8eL7ALnVJ4jceFd+UQ3iE6Ho0CkYLB4F1udl82V/oJclXpJvJMWGKDLkjn2xpBldMCap5PiH3aHo3IZEsSLgsB8eIU6FCXBMCo9GqAQloy2S0sxS+cBjuP2LTsvKBCNEgl49HBZSrMyJOGK6Nf77Nm37E2PTbP/3PzZN/wNRX+Aweug/5RD55ZDb/fcfG4KnRsK+5o/wOBVzCcmUBF/s4MkPMSO0m8uUv+1C2DRrizGxlgbamPIqlWrsqlXulwZtimvV+vaMm3N2VgmkHgTjz8qIAmmWe0zmCEu0bWCpqJps7RYMImLbGVhWwNMphE/FgYBvUHRRpUJfkA5l9OS8I+HM3JrW7dVW+1+G/oDUhjBKbcaK0dtLq33Y/Yll4YhfLUM1kLRh3ca4toV7YLpyOa6smVzZG3kUWOY8kqlB2u6pW609WsN0d9tiPnXhpj/oiHm2w1RhuVWaZff+z8KwPk0"/>
+    <FIXTUREGROUPS>
+        <FIXTUREGROUP DASUID="f1d1b04f-39af-4179-be5d-ce857483e211" NAME="All" TOGGLE_BLACKOUT="0" TOGGLE_STROBE="0" TOGGLE_FULL="0" TOGGLE_EXCLUSIVE_FULL="0" TOGGLE_FLASH="0" TOGGLE_EXCLUSIVE_FLASH="0">
+            <FIXTURES>
+                <FIXTURE DASUID="3f3d30e3-05c0-42b2-b364-dadc54617f54"/>
+                <FIXTURE DASUID="96b42b47-4db6-485f-8e34-a03a71250f1d"/>
+            </FIXTURES>
+            <BEAMSELECTION/>
+        </FIXTUREGROUP>
+        <FIXTUREGROUP DASUID="c1ca3d42-1ada-41f8-893f-7198b7981b88" NAME="rgb" TOGGLE_BLACKOUT="0" TOGGLE_STROBE="0" TOGGLE_FULL="0" TOGGLE_EXCLUSIVE_FULL="0" TOGGLE_FLASH="0" TOGGLE_EXCLUSIVE_FLASH="0">
+            <FIXTURES>
+                <FIXTURE DASUID="3f3d30e3-05c0-42b2-b364-dadc54617f54"/>
+                <FIXTURE DASUID="96b42b47-4db6-485f-8e34-a03a71250f1d"/>
+            </FIXTURES>
+            <BEAMSELECTION/>
+        </FIXTUREGROUP>
+    </FIXTUREGROUPS>
+    <SCENES>
+        <BANK DASUID="7bf416ae-5e67-4e39-8eee-a6039ed0d7c6" NAME="Bank 1" COLOR="#ffffcf08" COLLAPSED="0" PAUSED="0" HIDDEN="0" NBSCENE="1">
+            <SCENE DASUID="99ab7230-c9ce-4b7a-ad36-ad4281ff32a1" NAME="New Scene" COLOR="#ffffcf08" ENABLE="1" VISIBLE="1" LOOP_MODE="0" LOOP="0" PLAY_DIRECTION="1" PLAY_MODE="0" FLASH="0" BOUNCE_MODE="0" PLAY_TRIGGER="0" PLAY_DIVISION="8" DIMMER="1" D_FEATURE="1" SPEED="0.5" PHASE="0" SIZE="1" AUTO_RELEASE_END="1" JUMP_MODE="-1" RELEASE_MODE="2" RELEASE_PROTECT_MODE="0" FADE_IN="0" FADE_OUT="0" ATTRIBUTEVALUE_MODE="0" LTPPRIORITY="2" PAUSE="0" SAIMAGEPATH="">
+                <FIXTUREDATAS NB="2">
+                    <FIXTUREDATA FIXTURE="3f3d30e3-05c0-42b2-b364-dadc54617f54" DATA="eJxiYGb4D4YMDIw2DCC4Bw5toKQNAxMAAAD//w=="/>
+                    <FIXTUREDATA FIXTURE="96b42b47-4db6-485f-8e34-a03a71250f1d" DATA="eJxiYGb4D4YMDIw2DCC4Bw5toKQNAxMAAAD//w=="/>
+                </FIXTUREDATAS>
+                <RACK EXPAND_RACK="1" TYPE="2">
+                    <EFFECT TYPE="2" ID="130" DURATION="5000">
+                        <PARAMS NB="6">
+                            <PARAM TYPE="4" ID="1">
+                                <COLORS NB="8">
+                                    <COLOR VAL="1/0/0/0/0/0/0/0/1/1/1/1/0/0/0/0/0/1"/>
+                                    <COLOR VAL="1/0.498039/0/0/0/0/0/0/1/1/1/1/0/0/0/0/0/1"/>
+                                    <COLOR VAL="1/1/0/0/0/0/0/0/1/1/1/1/0/0/0/0/0/1"/>
+                                    <COLOR VAL="0/1/0/0/0/0/0/0/1/1/1/1/0/0/0/0/0/1"/>
+                                    <COLOR VAL="0/1/1/0/0/0/0/0/1/1/1/1/0/0/0/0/0/1"/>
+                                    <COLOR VAL="0/0/1/0/0/0/0/0/1/1/1/1/0/0/0/0/0/1"/>
+                                    <COLOR VAL="0.545098/0/1/0/0/0/0/0/1/1/1/1/0/0/0/0/0/1"/>
+                                    <COLOR VAL="1/0/1/0/0/0/0/0/1/1/1/1/0/0/0/0/0/1"/>
+                                </COLORS>
+                            </PARAM>
+                            <PARAM TYPE="2" ID="2" VAL="0"/>
+                            <PARAM TYPE="6" ID="3" VAL="0"/>
+                            <PARAM TYPE="1" ID="10" VAL="0"/>
+                            <PARAM TYPE="0" ID="11" VAL="0"/>
+                            <PARAM TYPE="1" ID="12" VAL="1"/>
+                        </PARAMS>
+                    </EFFECT>
+                    <BEAMS DASUID="509533cd-d46a-4222-b4f6-579ea970768c" NAME="" NB="2">
+                        <BEAM FIXTURE="96b42b47-4db6-485f-8e34-a03a71250f1d" BEAMID="0" IDSELECTION="1"/>
+                        <BEAM FIXTURE="3f3d30e3-05c0-42b2-b364-dadc54617f54" BEAMID="0" IDSELECTION="2"/>
+                    </BEAMS>
+                </RACK>
+            </SCENE>
+        </BANK>
+        <DAS_SELECTIONS SELECTED_LIVE_BANK="0">
+            <SELECTED_LIVE_SCENES DASUID="99ab7230-c9ce-4b7a-ad36-ad4281ff32a1"/>
+        </DAS_SELECTIONS>
+    </SCENES>
+    <SHORTCUTS/>
+    <TOUCH>
+        <TOUCHPAGE DASUID="c48c1b3e-9652-4cf5-8a5a-f8b7b9cba06e" NAME="Page 1" TOUCHCONTROL="0"/>
+    </TOUCH>
+    <DEVICES>
+        <DASTLDEVICE DASUID="8c58c009-78ba-4260-ab60-40777bffd539" DASTLNAME="Virtual Device" DASTLACTIVE="TRUE" DASTLCURRENTIDTYPE="1" DASTLBROADCAST="FALSE" DASTLZONEMERGETYPE="TRUE" DASBLACKOUT="TRUE" VERSION="2" TYPE="1" DASSERIAL="" ADDRESS="2.0.0.1/2.255.255.255">
+            <DASTLUNIVERSES DASTLNB="1">
+                <DASTLUNIVERSE DASTLTYPE="1" DASTLINDEX="0" CANBEINPUT="TRUE" DASTLTARGET="0"/>
+            </DASTLUNIVERSES>
+            <DASZONES DASTLNB="0"/>
+        </DASTLDEVICE>
+    </DEVICES>
+</DLMFILE>

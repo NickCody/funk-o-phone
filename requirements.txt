@@ -5,3 +5,4 @@ PyAudio==0.2.14
 numpy==1.26.4
 pynput==1.7.6
 py-midi==2.0.1
+pyartnet==1.0.1
