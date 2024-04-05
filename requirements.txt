@@ -6,3 +6,5 @@ numpy==1.26.4
 pynput==1.7.6
 py-midi==2.0.1
 pyartnet==1.0.1
+torch==2.2.2
+torchvision==0.17.2

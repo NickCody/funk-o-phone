@@ -1,12 +1,14 @@
 # Grove of the Ancients Core Engine
 
-Tested to work on MacOS Sonoma and Windows 11.
+Tested to work on MacOS Sonoma and Windows 11 (Python in Touch Designer still pending support)
 
 ## Installation
 
+Version 99 of Touch Designer requires Python 3.11.x. You need to install that, and then use t hat installation to create the virtual environment.
+
 ```bash
 brew install portaudio    # macOS only
-python3 -m venv venv
+python3 -m venv venv      # Must use Python 3.11.x
 source venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -14,6 +16,8 @@ pip install -r requirements.txt
 NOTE: Every terminal you open needs to have the virtual environment activated. 
       You can do this by running `source .venv/bin/activate` in the terminal.
       The other steps (creating the virtual environment and installing the requirements) only need to be done once.
+
+      Also, touch designer's path has been appended with `.venv/lib/python3.11/site-packages`. Windows isn't supported yet, but I'll add support soon.
 
 ### Windows
 
