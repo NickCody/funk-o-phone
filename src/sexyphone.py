@@ -4,14 +4,28 @@ import argparse
 import supervision as sv
 import numpy as np
 from ultralytics import YOLO, SAM, checks, hub
+import torch
 
 model = None
+
+global VIDEO_WIDTH
+
+VIDEO_WIDTH=960
+VIDEO_HEIGHT=540
 cap = cv2.VideoCapture(0)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 480)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 270)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, VIDEO_WIDTH)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, VIDEO_HEIGHT)
+
+
+# Load a pretrained YOLOv8n model
+# Create a random torch tensor of BCHW shape (1, 3, 640, 640) with values in range [0, 1] and type float32
+# Run inference on the source
+# model = YOLO('yolov8n.pt')
+# source = torch.rand(1, 3, 640, 640, dtype=torch.float32)
+# results = model(source)  # list of Results objects
 
 try:
-    model = YOLO("yolov8l.pt")
+    model = YOLO("yolov8n.pt")
 except:
     print("Caught error")
 
@@ -31,11 +45,11 @@ def run_sexyphone_detections():
     ret, frame = cap.read()
 
     if ret:
-        result = model(frame, agnostic_nms=True)[0]
+        result = model(frame, agnostic_nms=True, verbose=False)[0]
         detections = sv.Detections.from_yolov8(result)
 
-        for det in detections:
-            print(det)
+        # for det in detections:
+        #     print(det)
 
         return detections
     else:
