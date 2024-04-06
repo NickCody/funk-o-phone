@@ -30,7 +30,7 @@ def onCook(scriptOp):
         last_note_milliseconds = scriptOp.fetch('last_note_milliseconds', current_milliseconds, storeDefault=True)
 
         if current_milliseconds - last_note_milliseconds > 128:
-            op('midiout2').sendNoteOn(1, midiNote, 20)
+            op('midiout2').sendNoteOn(1, midiNote, 60)
             scriptOp.store('last_note_milliseconds', current_milliseconds);
 
     return
