@@ -17,7 +17,11 @@ def onCook(scriptOp):
 
     
     midiNote = op('math_detect_to_midi')['ch4']
+    y_coord = op('bottley')['bottley']
+    if y_coord == None:
+        y_coord = 0
 
+    print(y_coord)
     # if midiNote != None:
     #     intNote = int(midiNote)
     #     midiNote = f"ch{intNote}"
@@ -29,8 +33,13 @@ def onCook(scriptOp):
         current_milliseconds = time.time() * 1000
         last_note_milliseconds = scriptOp.fetch('last_note_milliseconds', current_milliseconds, storeDefault=True)
 
-        if current_milliseconds - last_note_milliseconds > 128:
+        if current_milliseconds - last_note_milliseconds > 1000 * y_coord:
             op('midiout2').sendNoteOn(1, midiNote, 60)
-            scriptOp.store('last_note_milliseconds', current_milliseconds);
+            scriptOp.store('last_note_milliseconds', current_milliseconds)
+
+        # if current_milliseconds - last_note_milliseconds > 128:
+        #     op('midiout2').sendNoteOn(1, midiNote, 60)
+        #     scriptOp.store('last_note_milliseconds', current_milliseconds);
+        
 
     return
