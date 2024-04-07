@@ -7,8 +7,11 @@ from ultralytics import YOLO, SAM, checks, hub
 
 model = None
 cap = cv2.VideoCapture(0)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 480)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 270)
+# enumerate capture devices
+for i in range(0, 10):
+    print(f"Device {i}: {cap.get(i)}")
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 try:
     model = YOLO("yolov8l.pt")
@@ -18,11 +21,8 @@ except:
 # hub.login('caeded7d33870b4fdd4ae54fb86a07468cadba0d40')
 # model = YOLO('https://hub.ultralytics.com/models/kzceP1pjvCKqSHMWjs5v')
 
-box_annotator = sv.BoxAnnotator(
-    thickness=2,
-    text_thickness=2,
-    text_scale=1
-)
+bounding_box_annotator = sv.BoundingBoxAnnotator()
+label_annotator = sv.LabelAnnotator()
 
 def arrayInfo(arr):
    return f"Datatype: {arr.dtype}, Dimensions: {arr.shape}"
@@ -32,7 +32,7 @@ def run_sexyphone_detections():
 
     if ret:
         result = model(frame, agnostic_nms=True)[0]
-        detections = sv.Detections.from_yolov8(result)
+        detections = sv.Detections.from_ultralytics(result)
 
         for det in detections:
             print(det)
@@ -48,17 +48,15 @@ def run_sexyphone_frame():
     result = model(frame, agnostic_nms=True)[0]
     detections = sv.Detections.from_yolov8(result)
     labels = [
-        f"{model.model.names[class_id]} {confidence:0.2f}"
-        for _, confidence, class_id, _
-        in detections
+        model.model.names[class_id]
+        for class_id
+        in detections.class_id
     ]
-    frame = box_annotator.annotate(
-        scene=frame, 
-        detections=detections, 
-        labels=labels
-    )
 
-    return frame
+    annotated_image = bounding_box_annotator.annotate(scene=image, detections=detections)
+    annotated_image = label_annotator.annotate(scene=annotated_image, detections=detections, labels=labels)
+
+    return annotated_image
 
 def opencv_to_td_frame(frame):
     # Convert BGR to RGB

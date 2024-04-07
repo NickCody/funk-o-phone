@@ -26,7 +26,9 @@ def onCook(scriptOp):
     scriptOp.clear()
 	
     detections = sexyphone.run_sexyphone_detections()
-
+    if detections is None:
+        return
+    
     vals = [
             (f"{sexyphone.model.model.names[class_id]}", confidence, x)
             for x, confidence, class_id, _
