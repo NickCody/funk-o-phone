@@ -4,6 +4,7 @@ import argparse
 import supervision as sv
 import numpy as np
 from ultralytics import YOLO, SAM, checks, hub
+import platform
 
 model = None
 
@@ -16,94 +17,6 @@ cap.set(cv2.CAP_PROP_FRAME_WIDTH, VIDEO_WIDTH)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, VIDEO_HEIGHT)
 
 
-# Load a pretrained YOLOv8n model
-# Create a random torch tensor of BCHW shape (1, 3, 640, 640) with values in range [0, 1] and type float32
-# Run inference on the source
-# model = YOLO('yolov8n.pt')
-# source = torch.rand(1, 3, 640, 640, dtype=torch.float32)
-# results = model(source)  # list of Results objects
-"""
-0: person
-1: bicycle
-2: car
-3: motorcycle
-4: airplane
-5: bus
-6: train
-7: truck
-8: boat
-9: traffic light
-10: fire hydrant
-11: stop sign
-12: parking meter
-13: bench
-14: bird
-15: cat
-16: dog
-17: horse
-18: sheep
-19: cow
-20: elephant
-21: bear
-22: zebra
-23: giraffe
-24: backpack
-25: umbrella
-26: handbag
-27: tie
-28: suitcase
-29: frisbee
-30: skis
-31: snowboard
-32: sports ball
-33: kite
-34: baseball bat
-35: baseball glove
-36: skateboard
-37: surfboard
-38: tennis racket
-39: bottle
-40: wine glass
-41: cup
-42: fork
-43: knife
-44: spoon
-45: bowl
-46: banana
-47: apple
-48: sandwich
-49: orange
-50: broccoli
-51: carrot
-52: hot dog
-53: pizza
-54: donut
-55: cake
-56: chair
-57: couch
-58: potted plant
-59: bed
-60: dining table
-61: toilet
-62: tv
-63: laptop
-64: mouse
-65: remote
-66: keyboard
-67: cell phone
-68: microwave
-69: oven
-70: toaster
-71: sink
-72: refrigerator
-73: book
-74: clock
-75: vase
-76: scissors
-77: teddy bear
-78: hair drier
-79: toothbrush
-"""
 
 try:
     # See for values => https://docs.ultralytics.com/models/yolov8/#overview
@@ -115,8 +28,6 @@ except:
 # hub.login('caeded7d33870b4fdd4ae54fb86a07468cadba0d40')
 # model = YOLO('https://hub.ultralytics.com/models/kzceP1pjvCKqSHMWjs5v')
 
-bounding_box_annotator = sv.BoundingBoxAnnotator()
-label_annotator = sv.LabelAnnotator()
 
 def arrayInfo(arr):
    return f"Datatype: {arr.dtype}, Dimensions: {arr.shape}"
@@ -125,7 +36,14 @@ def run_sexyphone_detections():
     ret, frame = cap.read()
 
     if ret:
-        result = model.predict(frame, device="mps", verbose=False, max_det=4, stream_buffer=True, imgsz=(480,640), classes=[39])[0]
+        # write if to detect os is windows
+        if platform.system() == 'Windows':
+            dv="cuda:0"
+        elif platform.system() == 'Darwin':
+            dv="mps"
+
+
+        result = model.predict(frame, device=dv, verbose=False, max_det=4, stream_buffer=True, imgsz=(480,640), classes=[39])[0]
         detections = sv.Detections.from_yolov8(result)
 
         for det in detections:
@@ -138,6 +56,9 @@ def run_sexyphone_detections():
 
 def run_sexyphone_frame():
     ret, frame = cap.read()
+
+    bounding_box_annotator = sv.BoundingBoxAnnotator()
+    label_annotator = sv.LabelAnnotator()
 
     result = model(frame, agnostic_nms=True)[0]
     detections = sv.Detections.from_yolov8(result)
