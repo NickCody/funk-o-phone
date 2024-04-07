@@ -4,9 +4,9 @@ class ChannelKeySet:
         self.counter = 0
         self.HISTORY_LEN = history_len
 
-    def add_key(self, key, float_value):
+    def add_key(self, key, tup_float):
         """Add a key with the global counter as the first value in the tuple and the provided float_value as the second."""
-        self.data[key] = (self.counter, float_value)
+        self.data[key] = (self.counter, tup_float)
         self.cull_keys()
 
     def increment_counter(self):
