@@ -1,26 +1,10 @@
 import sexyphone
 import numpy as np
 import re
+from sexyphone import VIDEO_WIDTH
+import ChannelManager
 
-def onCook2(scriptOp):
-	scriptOp.clear()
-	
-	# get input value
-	chop1 = scriptOp.inputs[0]
-	channel0 = chop1[0]
-	value0 = channel0.eval()
-	
-	# create new out channels
-	a = scriptOp.appendChan('out1')
-	b = scriptOp.appendChan('out2')
-	c = scriptOp.appendChan('out3')
-	
-	# assign out channels
-	# with below values
-	a[0] = value0*0.5
-	b[0] = value0
-	c[0] = ((value0+value0)/100)*value0
-	return
+channelManager = ChannelManager.ChannelKeySet(20)
 
 def onCook(scriptOp):
     scriptOp.clear()
@@ -45,11 +29,19 @@ def onCook(scriptOp):
 
     reduced_vals = [(class_id, confidence) for class_id, confidence in max_confidences.items()]
 
+    reduced_vals = [v for v in reduced_vals if v[0] in ["bottle"]]
+     
     for v in reduced_vals:
-        chan = scriptOp.appendChan(v[0])
-        chan[0] = v[1][1]
+        channelManager.add_key(v[0], v[1][1] / VIDEO_WIDTH)
+        print(v[1][1])
+
+    for k,v in channelManager:
+        chan = scriptOp.appendChan(k)
+        chan[0] = v[1]
     
     scriptOp.numSamples = 1
+
+    channelManager.increment_counter()
 
     return
 
