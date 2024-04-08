@@ -30,7 +30,7 @@ def onCook(scriptOp):
 
     reduced_vals = [(class_id, confidence) for class_id, confidence in max_confidences.items()]
 
-    reduced_vals = [v for v in reduced_vals if v[0] in ["bottle"]]
+    reduced_vals = [v for v in reduced_vals]
      
     for v in reduced_vals:
         channelManager.add_key(v[0], (v[1][1][0] / VIDEO_WIDTH, v[1][1][1] / VIDEO_HEIGHT))

@@ -20,25 +20,20 @@ cap.set(cv2.CAP_PROP_FPS, 30)
 
 try:
     # See for values => https://docs.ultralytics.com/models/yolov8/#overview
-    model = YOLO("yolov8n.pt") #, imgsz=640) #, conf_thres=0.65, iou_thres=0.45, classes=["bottle"], agnostic_nms=False, augment=False, verbose=False)
-    
+    model = YOLO("yolov8n.pt")
 except:
     print("Caught error")
-
-# hub.login('caeded7d33870b4fdd4ae54fb86a07468cadba0d40')
-# model = YOLO('https://hub.ultralytics.com/models/kzceP1pjvCKqSHMWjs5v')
-
 
 def arrayInfo(arr):
    return f"Datatype: {arr.dtype}, Dimensions: {arr.shape}"
 
 def run_sexyphone_detections():
     ret, frame = cap.read()
-
+ 
     if ret:
         # write if to detect os is windows
         if platform.system() == 'Windows':
-            dv="cuda"
+            dv="cpu"
         elif platform.system() == 'Darwin':
             dv="mps"
 
@@ -46,8 +41,8 @@ def run_sexyphone_detections():
         result = model.predict(frame, device=dv, verbose=False, max_det=4, stream_buffer=True, imgsz=(480,640), classes=[39])[0]
         detections = sv.Detections.from_ultralytics(result)
 
-        for det in detections:
-            print(det)
+        # for det in detections:
+        #     print(det)
 
         return detections
     else:
