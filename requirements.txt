@@ -1,10 +1,8 @@
 opencv-python==4.9.0.80
-ultralytics==8.1.0
-supervision==0.2.1
-# PyAudio==0.2.14
-# numpy==1.26.4
-# pynput==1.7.6
-# py-midi==2.0.1
-# pyartnet==1.0.1
-torch==2.2.2
-torchvision==0.17.2
+ultralytics==8.1.44
+supervision==0.19.0
+PyAudio==0.2.14
+numpy==1.26.4
+pynput==1.7.6
+py-midi==2.0.1
+pyartnet==1.0.1

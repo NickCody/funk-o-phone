@@ -13,7 +13,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-NOTE: Every terminal you open needs to have the virtual environment activated. 
+NOTE: Every terminal you open needs to have the virtual environment activated.
       You can do this by running `source .venv/bin/activate` in the terminal.
       The other steps (creating the virtual environment and installing the requirements) only need to be done once.
 
@@ -26,6 +26,13 @@ Additionally, on Windows, you'll want o run this to install pyaudio:
 ```bash  
     pip install pipwin
     pipwin install pyaudio
+```
+
+Download CUDA toolkit.
+<https://docs.nvidia.com/cuda/cuda-installation-guide-linux/#conda-installation>
+
+```bash
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ```
 
 ## Try some sample programs

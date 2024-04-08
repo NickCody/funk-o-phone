@@ -13,11 +13,12 @@ def onCook(scriptOp):
     if detections is None:
         return
     
-    vals = [
-            (f"{sexyphone.model.model.names[class_id]}", confidence, x)
-            for x, confidence, class_id, _
-            in detections
-    ]
+    vals = []
+    for det in detections:
+        coords, _, confidence, _, _, info = det
+        x1, y1, _, _ = coords
+        class_name = info['class_name']
+        vals.append((class_name, confidence, (x1, y1)))
 
     max_confidences = {}
 

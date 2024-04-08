@@ -15,7 +15,7 @@ VIDEO_HEIGHT=480
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, VIDEO_WIDTH)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, VIDEO_HEIGHT)
-
+cap.set(cv2.CAP_PROP_FPS, 30)
 
 
 try:
@@ -38,20 +38,20 @@ def run_sexyphone_detections():
     if ret:
         # write if to detect os is windows
         if platform.system() == 'Windows':
-            dv="cuda:0"
+            dv="cuda"
         elif platform.system() == 'Darwin':
             dv="mps"
 
 
         result = model.predict(frame, device=dv, verbose=False, max_det=4, stream_buffer=True, imgsz=(480,640), classes=[39])[0]
-        detections = sv.Detections.from_yolov8(result)
+        detections = sv.Detections.from_ultralytics(result)
 
         for det in detections:
             print(det)
 
         return detections
     else:
-        print("Could not read frame")
+        print(f"Could not read frame:{ret}")
         return None
 
 def run_sexyphone_frame():
@@ -61,14 +61,14 @@ def run_sexyphone_frame():
     label_annotator = sv.LabelAnnotator()
 
     result = model(frame, agnostic_nms=True)[0]
-    detections = sv.Detections.from_yolov8(result)
+    detections = sv.Detections.from_ultralytics(result)
     labels = [
         model.model.names[class_id]
         for class_id
         in detections.class_id
     ]
 
-    annotated_image = bounding_box_annotator.annotate(scene=image, detections=detections)
+    annotated_image = bounding_box_annotator.annotate(scene=frame, detections=detections)
     annotated_image = label_annotator.annotate(scene=annotated_image, detections=detections, labels=labels)
 
     return annotated_image

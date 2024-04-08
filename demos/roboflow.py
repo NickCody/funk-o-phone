@@ -55,22 +55,18 @@ def main():
     while True:
         ret, frame = cap.read()
 
-        result = model(frame, agnostic_nms=True)[0]
+        result = model.predict(frame, device='cuda:0', verbose=True)[0]
         detections = sv.Detections.from_yolov8(result)
-        labels = [
-            f"{model.model.names[class_id]} {confidence:0.2f}"
-            for _, confidence, class_id, _
-            in detections
-        ]
-        frame = box_annotator.annotate(
-            scene=frame, 
-            detections=detections, 
-            labels=labels
-        )
+        vals = []
+        for det in detections:
+            coords, _, confidence, _, _, info = det
+            x1, y1, _, _ = coords
+            class_name = info['class_name']
+            vals.append((class_name, confidence, (x1, y1)))
 
-        zone.trigger(detections=detections)
-        frame = zone_annotator.annotate(scene=frame)      
-        
+        for v in vals:
+            print(v)
+
         cv2.imshow("yolov8", frame)
 
         if (cv2.waitKey(30) == 27):
