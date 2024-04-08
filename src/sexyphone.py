@@ -33,7 +33,7 @@ def run_sexyphone_detections():
     if ret:
         # write if to detect os is windows
         if platform.system() == 'Windows':
-            dv="cpu"
+            dv="cuda"
         elif platform.system() == 'Darwin':
             dv="mps"
 
