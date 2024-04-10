@@ -1,6 +1,5 @@
 from ultralytics import YOLO
 
-
 def main():
     model = YOLO('yolov8n.pt')  # yolov3-v7
 

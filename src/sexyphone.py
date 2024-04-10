@@ -10,6 +10,12 @@ model = None
 
 global VIDEO_WIDTH
 
+# write if to detect os is windows
+if platform.system() == 'Windows':
+    dv="cpu"
+elif platform.system() == 'Darwin':
+    dv="mps"
+
 VIDEO_WIDTH=640
 VIDEO_HEIGHT=480
 cap = cv2.VideoCapture(0)
@@ -27,10 +33,14 @@ except:
 def arrayInfo(arr):
    return f"Datatype: {arr.dtype}, Dimensions: {arr.shape}"
 
-def run_sexyphone_detections():
+def run_sexyphone_detections(detections, max_detection):
     ret, frame = cap.read()
- 
+
+    class_dict =  {v: k for k, v in model.names.items()}
+    classes = [class_dict[detection] for detection in detections]
+
     if ret:
+<<<<<<< HEAD
         # write if to detect os is windows
         if platform.system() == 'Windows':
             dv="cuda"
@@ -40,6 +50,11 @@ def run_sexyphone_detections():
 
         result = model.predict(frame, device=dv, verbose=False, max_det=4, stream_buffer=True, imgsz=(480,640), classes=[39])[0]
         detections = sv.Detections.from_ultralytics(result)
+=======
+
+        result = model.predict(frame, device=dv, verbose=False, max_det=max_detection, stream_buffer=True, imgsz=(480,640), classes=classes)[0]
+        detections = sv.Detections.from_yolov8(result)
+>>>>>>> 0432b3d (Parameterization!)
 
         # for det in detections:
         #     print(det)

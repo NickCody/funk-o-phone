@@ -4,6 +4,11 @@ class ChannelKeySet:
         self.counter = 0
         self.HISTORY_LEN = history_len
 
+    def set_hist(self, history_len):
+        """Set the history length."""
+        self.HISTORY_LEN = history_len
+        self.cull_keys()
+
     def add_key(self, key, tup_float):
         """Add a key with the global counter as the first value in the tuple and the provided float_value as the second."""
         self.data[key] = (self.counter, tup_float)
