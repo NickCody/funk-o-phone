@@ -40,24 +40,15 @@ def run_sexyphone_detections(detections, max_detection):
     classes = [class_dict[detection] for detection in detections]
 
     if ret:
-<<<<<<< HEAD
-        # write if to detect os is windows
-        if platform.system() == 'Windows':
-            dv="cuda"
-        elif platform.system() == 'Darwin':
-            dv="mps"
-
-
-        result = model.predict(frame, device=dv, verbose=False, max_det=4, stream_buffer=True, imgsz=(480,640), classes=[39])[0]
-        detections = sv.Detections.from_ultralytics(result)
-=======
 
         result = model.predict(frame, device=dv, verbose=False, max_det=max_detection, stream_buffer=True, imgsz=(480,640), classes=classes)[0]
         detections = sv.Detections.from_yolov8(result)
->>>>>>> 0432b3d (Parameterization!)
 
-        # for det in detections:
-        #     print(det)
+        detections = [
+            # (name, confidence, (x1, y1, x2, y2))
+            (model.model.names[det[2]], det[1], det[0])
+            for det in detections
+        ]
 
         return detections
     else:

@@ -19,35 +19,30 @@ def onCook(scriptOp):
 
     # if len(detections) == 0:
     #     return
-    
+
     vals = []
     for det in detections:
-        coords, _, confidence, _, _, info = det
-        x1, y1, _, _ = coords
-        class_name = info['class_name']
-        vals.append((class_name, confidence, (x1, y1)))
+        class_name, confidence, coords = det
+        x1, y1, x2, y2= coords
+        percent_x = ((x1+x2)/2)/VIDEO_WIDTH
+        percent_y = ((y1+y2)/2)/VIDEO_HEIGHT
+        vals.append((class_name, confidence, (percent_x, percent_y)))
 
     max_confidences = {}
 
-    for class_id, confidence, coord in vals:
-        base_class = re.match(r"([a-zA-Z]+)", class_id).group(1)
-        
+    for class_name, confidence, coord in vals:
+        base_class = re.match(r"([a-zA-Z]+)", class_name).group(1)
         if base_class not in max_confidences or confidence > max_confidences[base_class][0]:
-            x_c = (coord[0] + coord[2])/2
-            y_c = (coord[1] + coord[3])/2
-            max_confidences[base_class] = (confidence,(x_c,y_c))
+            max_confidences[base_class] = (confidence, (coord[0], coord[1]))
 
-    reduced_vals = [(class_id, confidence) for class_id, confidence in max_confidences.items()]
-    reduced_vals = [v for v in reduced_vals]
-     
-    for v in reduced_vals:
-        channelManager.add_key(v[0], (v[1][1][0] / VIDEO_WIDTH, v[1][1][1] / VIDEO_HEIGHT))
+    for k,v in max_confidences.items():
+        channelManager.add_key(k, v[1])
 
-    for k,v1 in channelManager:
+    for k,v in channelManager:
         chan = scriptOp.appendChan(f"{k}x")
-        chan[0] = v1[1][0]
+        chan[0] = v[1][0]
         chan = scriptOp.appendChan(f"{k}y")
-        chan[0] = v1[1][1]
+        chan[0] = v[1][1]
     
     scriptOp.numSamples = 1
 

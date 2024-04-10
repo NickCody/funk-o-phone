@@ -16,7 +16,6 @@ def onCook(scriptOp):
     scriptOp.clear()
 
     target_midi = scriptOp.parent().par.Targetmidiout
-    print(target_midi)
     frequency = int(op('frequency').par.value0) 
     channel = int(op('channel').par.value0)
     velocity = int(op('velocity').par.value0)
@@ -36,7 +35,7 @@ def onCook(scriptOp):
         # print(f"Playing {midiNote} on channel {channel} with velocity {velocity}")
         # chan = scriptOp.appendChan(f"ch{channel}n")
         # chan[0] = midiNote
-        send_note(channel, midiNote, velocity, target_midi)
+        # send_note(channel, midiNote, velocity, target_midi)
         scriptOp.store('last_note_milliseconds', current_milliseconds)
         scriptOp.store('last_note_played', midiNote)
     
@@ -47,7 +46,6 @@ def onCook(scriptOp):
 def send_note(channel, note, velocity, midi_out_str):
     # Get reference to the MIDI Out CHOP
     midi_out = op(midi_out_str)
-    print(midi_out.par)
 
     # Define Note On message components
     status_byte = 0x90 + (channel-1)
@@ -64,9 +62,9 @@ def send_note(channel, note, velocity, midi_out_str):
     midi_out.send(note_on_bytes)    
 
 
-def send_all_off(channel):
+def send_all_off(channel, midi_out_str):
     # Get reference to the MIDI Out CHOP
-    midi_out = op('/project1/midiout2')
+    midi_out = op(midi_out_str)
 
     # Define All Notes Off message components
     status_byte = 0xB0 + (channel-1)  # Control Change message on MIDI channel 1
@@ -82,9 +80,9 @@ def send_all_off(channel):
     # Send All Notes Off message through MIDI Out CHOP
     midi_out.send(all_notes_off_bytes)
 
-def send_note_off(channel, note):
+def send_note_off(channel, note, midi_out_str):
     # Get reference to the MIDI Out CHOP
-    midi_out = op('/project1/midiout2')
+    midi_out = op(midi_out_str)
 
     # Define Note Off message components
     status_byte = 0x80 + (channel-1)  # Note Off message on MIDI channel 1
