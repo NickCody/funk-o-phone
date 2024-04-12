@@ -9,16 +9,16 @@ channelManager = ChannelManager.ChannelKeySet(60)
 def onCook(scriptOp):
     scriptOp.clear()
 
+    half_precision = op("../AI_Detector").par.Halfprecision
+    min_confidence = op("../AI_Detector").par.Minconfidence
     history_len = op("../AI_Detector").par.Historylength
     detectio_csv = op("../AI_Detector").par.Detectioncsv
     max_detection = op("../AI_Detector").par.Maxdetection
     detection_vector = [item.strip() for item in detectio_csv.eval().split(',')]
-    detections = sexyphone.run_sexyphone_detections(detection_vector, int(max_detection))
+    detections = sexyphone.run_sexyphone_detections(
+        detection_vector, int(max_detection), float(min_confidence), bool(half_precision))
     
     channelManager.set_hist(history_len)
-
-    # if len(detections) == 0:
-    #     return
 
     vals = []
     for det in detections:

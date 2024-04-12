@@ -16,13 +16,16 @@ def onCook(scriptOp):
     scriptOp.clear()
 
     target_midi = scriptOp.parent().par.Targetmidiout
-    frequency = int(op('frequency').par.value0) 
+    low_frequency = int(op('lowfrequency').par.value0) 
+    high_frequency = int(op('highfrequency').par.value0) 
     channel = int(op('channel').par.value0)
     velocity = int(op('velocity').par.value0)
-    y_coord = scriptOp.inputs[0][0]
+    tempo_coefficient = scriptOp.inputs[0][0]
+    print(tempo_coefficient)
     midiNote = scriptOp.inputs[1][0]
 
-    if midiNote == None or y_coord == None:
+    if midiNote == None or tempo_coefficient == None:
+        send_all_off(channel, target_midi)
         return
 
     midiNote = int(midiNote)
@@ -31,17 +34,22 @@ def onCook(scriptOp):
     last_note_milliseconds = scriptOp.fetch('last_note_milliseconds', current_milliseconds, storeDefault=True)
     last_note_played = scriptOp.fetch('last_note_played', int(op('lownote').par.value0), storeDefault=True)
 
-    if current_milliseconds - last_note_milliseconds > frequency * y_coord:
-        # print(f"Playing {midiNote} on channel {channel} with velocity {velocity}")
-        # chan = scriptOp.appendChan(f"ch{channel}n")
-        # chan[0] = midiNote
-        # send_note(channel, midiNote, velocity, target_midi)
+    freq = abs(high_frequency - low_frequency)*tempo_coefficient + low_frequency
+    if current_milliseconds - last_note_milliseconds > freq:
+        send_note(channel, midiNote, velocity, target_midi)
+        # add_note_channel(scriptOp, channel, midiNote, velocity)
         scriptOp.store('last_note_milliseconds', current_milliseconds)
         scriptOp.store('last_note_played', midiNote)
     
-    scriptOp.numSamples = 1
+    # scriptOp.numSamples = 1
 
     return
+
+def add_note_channel(scriptOp, channel, note, velocity):
+    print(f"Playing {note} on channel {channel} with velocity {velocity}")
+    # chan = scriptOp.appendChan(f"ch{channel}n{note}")
+    chan = scriptOp.appendChan(f"ch{channel}n")
+    chan[0] = note
 
 def send_note(channel, note, velocity, midi_out_str):
     # Get reference to the MIDI Out CHOP
@@ -53,10 +61,10 @@ def send_note(channel, note, velocity, midi_out_str):
     velocity = velocity  # Velocity value
 
     # Construct Note On message as a list
-    note_on_message = [status_byte, note_number, velocity]
+    note_on_message = [status_byte.to_bytes(1, 'little'), note_number.to_bytes(1, 'little'), velocity.to_bytes(1, 'little')]
 
     # Convert the message list to bytes
-    note_on_bytes = bytes(note_on_message)
+    note_on_bytes = b''.join(note_on_message)
 
     # Send Note On message through MIDI Out CHOP
     midi_out.send(note_on_bytes)    

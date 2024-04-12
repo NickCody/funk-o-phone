@@ -33,7 +33,7 @@ except:
 def arrayInfo(arr):
    return f"Datatype: {arr.dtype}, Dimensions: {arr.shape}"
 
-def run_sexyphone_detections(detections, max_detection):
+def run_sexyphone_detections(detections, max_detection, min_confidence, half_precision):
     ret, frame = cap.read()
 
     class_dict =  {v: k for k, v in model.names.items()}
@@ -41,7 +41,7 @@ def run_sexyphone_detections(detections, max_detection):
 
     if ret:
 
-        result = model.predict(frame, device=dv, verbose=False, max_det=max_detection, stream_buffer=True, imgsz=(480,640), classes=classes)[0]
+        result = model.predict(frame, device=dv, half=half_precision, conf=min_confidence, verbose=False, max_det=max_detection, stream_buffer=True, imgsz=(480,640), classes=classes)[0]
         detections = sv.Detections.from_yolov8(result)
 
         detections = [
