@@ -47,7 +47,7 @@ def data_for_freq(frequency: float, time: float = None):
     for i in range(remainder_frames):
         wavedata.append(0)
 
-    number_of_bytes = str(len(wavedata))  
+    number_of_bytes = str(len(wavedata))
     wavedata = struct.pack(number_of_bytes + 'h', *wavedata)
 
     return wavedata
