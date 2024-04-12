@@ -2,7 +2,7 @@ import sexyphone
 import numpy as np
 import re
 from sexyphone import VIDEO_WIDTH, VIDEO_HEIGHT
-import ChannelManager
+import util.ChannelManager as ChannelManager
 
 channelManager = ChannelManager.ChannelKeySet(60)
 

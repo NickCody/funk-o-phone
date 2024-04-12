@@ -45,7 +45,6 @@ def run_sexyphone_detections(detections, max_detection, min_confidence, half_pre
         detections = sv.Detections.from_yolov8(result)
 
         detections = [
-            # (name, confidence, (x1, y1, x2, y2))
             (model.model.names[det[2]], det[1], det[0])
             for det in detections
         ]
