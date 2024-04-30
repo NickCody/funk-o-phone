@@ -16,8 +16,8 @@ if platform.system() == 'Windows':
 elif platform.system() == 'Darwin':
     dv="mps"
 
-VIDEO_WIDTH=640
-VIDEO_HEIGHT=480
+VIDEO_WIDTH=800
+VIDEO_HEIGHT=608
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, VIDEO_WIDTH)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, VIDEO_HEIGHT)
@@ -33,23 +33,19 @@ except:
 def arrayInfo(arr):
    return f"Datatype: {arr.dtype}, Dimensions: {arr.shape}"
 
-def run_sexyphone_detections(detections, max_detection, min_confidence, half_precision):
+def run_sexyphone_detections(detection_filter, max_detection, min_confidence, half_precision):
     ret, frame = cap.read()
 
     class_dict =  {v: k for k, v in model.names.items()}
-    classes = [class_dict[detection] for detection in detections]
+    classes = [class_dict[detection] for detection in detection_filter]
 
     if ret:
 
-        result = model.predict(frame, device=dv, half=half_precision, conf=min_confidence, verbose=False, max_det=max_detection, stream_buffer=True, imgsz=(480,640), classes=classes)[0]
-        detections = sv.Detections.from_yolov8(result)
+        result = model.predict(frame, device=dv, half=half_precision, conf=min_confidence, verbose=False, max_det=max_detection, stream_buffer=True, imgsz=(VIDEO_HEIGHT,VIDEO_WIDTH), classes=classes)[0]
+        
+        # (array([ 98.58, 170.45, 172.78, 326.29], dtype=float32), None, 0.854185, 39, None, {'class_name': 'bottle'}))
+        return sv.Detections.from_ultralytics(result)
 
-        detections = [
-            (model.model.names[det[2]], det[1], det[0])
-            for det in detections
-        ]
-
-        return detections
     else:
         print(f"Could not read frame:{ret}")
         return None

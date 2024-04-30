@@ -21,7 +21,6 @@ def onCook(scriptOp):
     channel = int(op('channel').par.value0)
     velocity = int(op('velocity').par.value0)
     tempo_coefficient = scriptOp.inputs[0][0]
-    print(tempo_coefficient)
     midiNote = scriptOp.inputs[1][0]
 
     if midiNote == None or tempo_coefficient == None:

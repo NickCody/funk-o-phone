@@ -2,9 +2,6 @@ import sexyphone
 import numpy as np
 import re
 from sexyphone import VIDEO_WIDTH, VIDEO_HEIGHT
-import util.ChannelManager as ChannelManager
-
-channelManager = ChannelManager.ChannelKeySet(60)
 
 def onCook(scriptOp):
     scriptOp.clear()
@@ -22,8 +19,6 @@ def onCook(scriptOp):
                                                       bool(half_precision))
     ]
     
-    channelManager.set_hist(history_len)
-
     vals = []
     if detections is not None:
         for det in detections:
@@ -42,17 +37,12 @@ def onCook(scriptOp):
             max_confidences[base_class] = (confidence, (coord[0], coord[1]))
 
     for k,v in max_confidences.items():
-        channelManager.add_key(k, v[1])
-
-    for k,v in channelManager:
         chan = scriptOp.appendChan(f"{k}x")
         chan[0] = v[1][0]
         chan = scriptOp.appendChan(f"{k}y")
         chan[0] = v[1][1]
     
     scriptOp.numSamples = 1
-
-    channelManager.increment_counter()
 
     return
 
