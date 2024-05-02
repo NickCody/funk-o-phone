@@ -36,7 +36,7 @@ def onCook(scriptOp):
     freq = abs(high_frequency - low_frequency)*tempo_coefficient + low_frequency
     if current_milliseconds - last_note_milliseconds > freq:
         send_note(channel, midiNote, velocity, target_midi)
-        # add_note_channel(scriptOp, channel, midiNote, velocity)
+        #add_note_channel(scriptOp, channel, midiNote, velocity)
         scriptOp.store('last_note_milliseconds', current_milliseconds)
         scriptOp.store('last_note_played', midiNote)
     
