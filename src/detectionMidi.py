@@ -24,7 +24,7 @@ def onCook(scriptOp):
     midiNote = scriptOp.inputs[1][0]
 
     if midiNote == None or tempo_coefficient == None:
-        send_all_off(channel, target_midi)
+        # send_all_off(channel, target_midi)
         return
 
     midiNote = int(midiNote)
