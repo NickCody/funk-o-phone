@@ -24,31 +24,39 @@ def onCook(scriptOp):
     midiNote = scriptOp.inputs[1][0]
 
     if midiNote == None or tempo_coefficient == None:
-        # send_all_off(channel, target_midi)
+        send_all_off(channel, target_midi)
         return
-
-    midiNote = int(midiNote)
 
     current_milliseconds = int(time.time() * 1000)
     last_note_milliseconds = scriptOp.fetch('last_note_milliseconds', current_milliseconds, storeDefault=True)
-    last_note_played = scriptOp.fetch('last_note_played', int(op('lownote').par.value0), storeDefault=True)
+    last_note_played = scriptOp.fetch('last_note_played', midiNote, storeDefault=True)
+    duration = current_milliseconds - last_note_milliseconds
 
-    freq = abs(high_frequency - low_frequency)*tempo_coefficient + low_frequency
-    if current_milliseconds - last_note_milliseconds > freq:
-        send_note(channel, midiNote, velocity, target_midi)
-        #add_note_channel(scriptOp, channel, midiNote, velocity)
-        scriptOp.store('last_note_milliseconds', current_milliseconds)
-        scriptOp.store('last_note_played', midiNote)
-    
+    midiNote = int(midiNote)
+    freq = low_frequency + abs(high_frequency - low_frequency) * tempo_coefficient
+
+    # print(f"tempo_coeff: {tempo_coefficient}, low_freq: {low_frequency}, high_freq: {high_frequency}, dur: {duration}, freq: {freq}")
+    if duration > freq:
+        if midiNote == last_note_played:
+            scriptOp.store('last_note_played', 0)
+            return
+        else:
+            add_note_channel(scriptOp, channel, midiNote, velocity)
+            scriptOp.store('last_note_played', midiNote)
+            scriptOp.store('last_note_milliseconds', current_milliseconds)
+    else:
+        if last_note_played != 0:
+            add_note_channel(scriptOp, channel, last_note_played, velocity)
+
     # scriptOp.numSamples = 1
 
     return
 
 def add_note_channel(scriptOp, channel, note, velocity):
-    print(f"Playing {note} on channel {channel} with velocity {velocity}")
-    # chan = scriptOp.appendChan(f"ch{channel}n{note}")
-    chan = scriptOp.appendChan(f"ch{channel}n")
-    chan[0] = note
+    # print(f"Playing {note} on channel {channel} with velocity {velocity}")
+    chan = scriptOp.appendChan(f"ch{channel}n{note}")
+    # chan = scriptOp.appendChan(f"ch{channel}n")
+    chan[0] = velocity
 
 def send_note(channel, note, velocity, midi_out_str):
     # Get reference to the MIDI Out CHOP
