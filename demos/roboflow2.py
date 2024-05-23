@@ -4,7 +4,6 @@ import argparse
 from ultralytics import YOLO
 import supervision as sv
 import numpy as np
-from time import sleep
 
 
 ZONE_POLYGON = np.array([
@@ -14,12 +13,14 @@ ZONE_POLYGON = np.array([
     [0, 1]
 ])
 
+VIDEO_HEIGHT = 736
+VIDEO_WIDTH = 1280
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="YOLOv8 live")
     parser.add_argument(
         "--webcam-resolution", 
-        default=[1280, 720], 
+        default=[VIDEO_WIDTH, VIDEO_HEIGHT], 
         nargs=2, 
         type=int
     )
@@ -52,29 +53,34 @@ def main():
         text_thickness=4,
         text_scale=2
     )
+    class_dict =  {v: k for k, v in model.names.items()}
+    classes = [class_dict[detection] for detection in class_dict.keys() if detection != "bed" and detection != "person"]
 
     while True:
         ret, frame = cap.read()
 
-        result = model.predict(frame, device='mps', verbose=True)[0]
+        # result = model(frame, agnostic_nms=True)[0]
+
+        result = model.predict(frame, classes=classes, device="mps", conf=0.2, verbose=False, max_det=10, stream_buffer=True, imgsz=(VIDEO_HEIGHT,VIDEO_WIDTH))[0]
+
         detections = sv.Detections.from_ultralytics(result)
-
-        vals = []
         for det in detections:
-            coords, _, confidence, _, _, info = det
-            x1, y1, w, h = coords
-            class_name = info['class_name']
-            vals.append((class_name, confidence, (x1, y1)))
-            cv2.rectangle(frame, (x1, y1), (x1+w, y1+h), (0, 255, 0), 2)
+            print(det)
+        # labels = [
+        #     f"{model.model.names[class_id]} {confidence:0.2f}"
+        #     for _, confidence, class_id, _
+        #     in detections
+        # ]
+        frame = box_annotator.annotate(
+            scene=frame, 
+            detections=detections, 
+            labels=[] #labels
+        )
 
-        for v in vals:
-            print(v)
-
-    
+        zone.trigger(detections=detections)
+        frame = zone_annotator.annotate(scene=frame)      
+        
         cv2.imshow("yolov8", frame)
-
-        # Sleep for 100ms
-        sleep(0.1)
 
         if (cv2.waitKey(30) == 27):
             break

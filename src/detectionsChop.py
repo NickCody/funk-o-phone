@@ -24,7 +24,7 @@ def onCook(scriptOp):
         return
 
     detections = [
-        (det[5]['class_name'], det[2], det[0])
+        (det[5]['class_name'].replace(" ", ""), det[2], det[0])
         for det in ai_detections     ]
     
     channelManager.set_hist(history_len)

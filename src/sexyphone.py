@@ -38,7 +38,9 @@ def run_sexyphone_detections(detection_filter, max_detection, min_confidence, ha
 
     class_dict =  {v: k for k, v in model.names.items()}
     classes = [class_dict[detection] for detection in detection_filter]
-
+    for f in detection_filter:
+        print(f)
+    
     if ret:
 
         result = model.predict(frame, device=dv, half=half_precision, conf=min_confidence, verbose=False, max_det=max_detection, stream_buffer=True, imgsz=(VIDEO_HEIGHT,VIDEO_WIDTH), classes=classes)[0]
