@@ -38,8 +38,6 @@ def run_sexyphone_detections(detection_filter, max_detection, min_confidence, ha
 
     class_dict =  {v: k for k, v in model.names.items()}
     classes = [class_dict[detection] for detection in detection_filter]
-    for f in detection_filter:
-        print(f)
     
     if ret:
 
