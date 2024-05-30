@@ -53,6 +53,21 @@ def onCook(scriptOp):
         chan[0] = v[1][0]
         chan = scriptOp.appendChan(f"{k}y")
         chan[0] = v[1][1]
+
+    # for k,v in max_confidences.items():
+    #     channelManager.add_key(k, v[1])
+
+    # for k,v in channelManager:
+    #     chan = scriptOp.appendChan(f"{k}x")
+    #     chan[0] = v[1][0]
+    #     chan = scriptOp.appendChan(f"{k}y")
+    #     chan[0] = v[1][1]
+
+    for k,v in max_confidences.items():
+        chan = scriptOp.appendChan(f"{k}x")
+        chan[0] = v[1][0]
+        chan = scriptOp.appendChan(f"{k}y")
+        chan[0] = v[1][1]
     
     scriptOp.numSamples = 1
 

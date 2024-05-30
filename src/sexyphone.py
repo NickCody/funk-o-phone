@@ -16,8 +16,8 @@ if platform.system() == 'Windows':
 elif platform.system() == 'Darwin':
     dv="mps"
 
-VIDEO_WIDTH=800
-VIDEO_HEIGHT=608
+VIDEO_WIDTH=1920
+VIDEO_HEIGHT=1080
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, VIDEO_WIDTH)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, VIDEO_HEIGHT)

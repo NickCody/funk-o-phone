@@ -23,31 +23,51 @@ def onCook(scriptOp):
     tempo_coefficient = scriptOp.inputs[0][0]
     midiNote = scriptOp.inputs[1][0]
 
+    
     if midiNote == None or tempo_coefficient == None:
         send_all_off(channel, target_midi)
         return
 
-    current_milliseconds = int(time.time() * 1000)
+    VALID_NOTES = [1,3,4,6,8,9,11,13,15,16,18,20,21,23,25,27,28,30,32,33,35,37,39,42,44,45,47,51,52,54,56,57,59,61,63,64,66,68,69,71,73,75,76,78,80,81,83,85,87,88,90,92,93,95,97,99,100,102,104,105,107,109,111,112,114,116,117,119,121,123,124,126]
+
+    idx = int(midiNote/128.0 * len(VALID_NOTES))
+    #constrain idx to the length of the VALID_NOTES list
+    idx = min(idx, len(VALID_NOTES)-1)
+    midiNote = VALID_NOTES[idx]
+    
+    current_milliseconds = int(time.time() * 1000.0)
     last_note_milliseconds = scriptOp.fetch('last_note_milliseconds', current_milliseconds, storeDefault=True)
-    last_note_played = scriptOp.fetch('last_note_played', midiNote, storeDefault=True)
+    # last_note_played = scriptOp.fetch('last_note_played', midiNote, storeDefault=True)
     duration = current_milliseconds - last_note_milliseconds
 
     midiNote = int(midiNote)
-    freq = low_frequency + abs(high_frequency - low_frequency) * tempo_coefficient
+    
+    # freq = low_frequency + abs(high_frequency - low_frequency) * tempo_coefficient
+    # if duration > freq:
+    #     if midiNote == last_note_played:
+    #         scriptOp.store('last_note_played', 0)
+    #         return
+    #     else:
+    #         add_note_channel(scriptOp, channel, midiNote, velocity)
+    #         scriptOp.store('last_note_played', midiNote)
+    #         scriptOp.store('last_note_milliseconds', current_milliseconds)
+    # else:
+    #     if last_note_played != 0:
+    #         add_note_channel(scriptOp, channel, last_note_played, velocity)
 
-    # print(f"tempo_coeff: {tempo_coefficient}, low_freq: {low_frequency}, high_freq: {high_frequency}, dur: {duration}, freq: {freq}")
-    if duration > freq:
-        if midiNote == last_note_played:
-            scriptOp.store('last_note_played', 0)
-            return
-        else:
-            add_note_channel(scriptOp, channel, midiNote, velocity)
-            scriptOp.store('last_note_played', midiNote)
-            scriptOp.store('last_note_milliseconds', current_milliseconds)
+    # send_all_off(channel, target_midi)
+    # add_note_channel(scriptOp, channel, midiNote, velocity)
+    
+
+    if duration < high_frequency and duration > low_frequency:
+        send_all_off(channel, target_midi)
     else:
-        if last_note_played != 0:
-            add_note_channel(scriptOp, channel, last_note_played, velocity)
+        add_note_channel(scriptOp, channel, midiNote, velocity)
 
+    # if duration > high_frequency:
+    #     send_note(channel, midiNote, velocity, target_midi)
+        
+    scriptOp.store('last_note_milliseconds', current_milliseconds)
     # scriptOp.numSamples = 1
 
     return

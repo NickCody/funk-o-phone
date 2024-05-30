@@ -22,6 +22,7 @@ def onCook(scriptOp):
     noteoff = op("../ai_midi_groove").par.Noteoff
     midiChannel = op("../ai_midi_groove").par.Midichannel
     
+    print(midiChannel)
     # Check if the input CHOP has any channels
     if inputCHOP.numChans > 0:
         if isinstance(inputCHOP[0].vals[0], list):
