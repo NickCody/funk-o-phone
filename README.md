@@ -1,4 +1,4 @@
-# Rumple Sexyphone
+# Funk-o-Phone
 
 Tested to work on MacOS Sonoma and Windows 11
 
